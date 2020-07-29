@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play</title>
+</head>
+<body>
+    <h1>Timer</h1> 
+    <div id="clockdiv"> 
+      <div> 
+        <span class="minutes" id="minute"></span> 
+        <div class="smalltext">Minutes</div> 
+      </div> 
+      <div> 
+        <span class="seconds" id="second"></span> 
+        <div class="smalltext">Seconds</div> 
+      </div> 
+    </div> 
+    {% for i in range(9) %}
+        {% for j in range(9) %}
+            {% set x = rboard[i][j]+".png" %}
+            <img src="{{ url_for('static' , filename=x) }}" width="50px" height="50px" >
+        {% endfor %}
+        <br>
+    {% endfor %}
+</body>
+</html>
