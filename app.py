@@ -1,15 +1,15 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_sqlalchemy import flask_sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_user, logout_user, login_required, UserMixin, LoginManager, login_required, current_user
-
-db=SQLAlchemy()
 
 app=Flask(__name__)
 
 app.config['SECRET_KEY'] = 'bjminesweeper'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
+db=SQLAlchemy(app)
 db.init_app(app)
 
 login_manager = LoginManager()
@@ -19,10 +19,14 @@ login_manager.init_app(app)
 class User(UserMixin, db.Model):
     id=db.Column(db.Integer, primary_key=True)
     email=db.Column(db.String(100),unique=True)
-    password=db.Column(db.string(100))
+    password=db.Column(db.String(100))
     name=db.Column(db.String(1000))
+    def __init__(self,email,password,name):
+        self.email=email
+        self.password=password
+        self.name=name
 
-# db.create_all(app)
+db.create_all()
 
 @login_manager.user_loader
 def load_user(user_id):
