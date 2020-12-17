@@ -64,7 +64,9 @@ def logout():
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
-
+@app.route('/game')
+def play():
+    return render_template('layout.html')
 @app.route('/signup', methods=['POST'])
 def signup_post():
     email = request.form.get('email')
